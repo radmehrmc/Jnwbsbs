@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bin — BinVault</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><a href="/">BinVault</a></div>
+</header>
+
+<main class="viewer" id="viewer">
+  <div class="viewer-inner">Loading…</div>
+</main>
+
+<script>
+  // get ID from path /bin/{id}
+  const path = location.pathname;
+  const parts = path.split('/').filter(Boolean);
+  const id = parts.length >= 2 ? parts[1] : null;
+
+  async function loadBin() {
+    if (!id) {
+      document.querySelector('.viewer-inner').textContent = 'No ID';
+      return;
+    }
+    const res = await fetch('/api/bins');
+    const bins = await res.json();
+    const bin = bins.find(b => b.id === id);
+    if (!bin) {
+      document.querySelector('.viewer-inner').textContent = 'Not found';
+      return;
+    }
+    document.title = bin.title + ' — BinVault';
+    document.querySelector('.viewer-inner').innerHTML = `
+      <h1>${bin.title}</h1>
+      <div class="meta">Created: ${new Date(bin.createdAt).toLocaleString()}</div>
+      <pre class="code">${escapeHtml(bin.content)}</pre>
+    `;
+  }
+
+  function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  loadBin();
+</script>
+</body>
+</html>

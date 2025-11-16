@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BinVault — Glass UI</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">BinVault</div>
+  <div class="actions">
+    <button id="createBtn" class="btn primary">Create Bin</button>
+  </div>
+</header>
+
+<main class="main">
+  <aside class="sidebar">
+    <div class="list" id="binsList">Loading…</div>
+  </aside>
+
+  <section class="content" id="contentArea">
+    <div class="empty">Select a bin or create a new one</div>
+  </section>
+</main>
+
+<!-- Modal -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-card">
+    <h3>Create a new Bin</h3>
+    <input id="binTitle" placeholder="Title">
+    <textarea id="binContent" placeholder="Paste your text here"></textarea>
+    <div class="modal-actions">
+      <button id="publish" class="btn primary">Publish</button>
+      <button id="closeModal" class="btn">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<script src="/script.js" type="module"></script>
+</body>
+</html>
